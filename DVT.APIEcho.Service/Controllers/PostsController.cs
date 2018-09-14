@@ -14,10 +14,35 @@ namespace DVT.APIEcho.Service.Controllers
 
         public Models.Post Get(int id) => Content.Posts.First(c => c.Id == id);
 
-        public Models.Post Post([FromBody]Models.Post value) => value;
+        public Models.Post Post([FromBody]Models.Post value)
+        {
+            if(Content.Posts.Count(p => p.Id == value.Id) == 0)
+            {
+                Content.Posts.Add(value);
+            }
+            return value;
+        }
 
-        public bool Put(int id, [FromBody]Models.Post value) => Content.Posts.Count(c => c.Id == id) > 0 ? true : false;
+        public bool Put(int id, [FromBody]Models.Post value)
+        {
+            if (Content.Posts.Count(c => c.Id == id) > 0)
+            {
+                Content.Posts[id] = value;
+                return true;
+            }
 
-        public bool Delete(int id) => Content.Posts.Count(c => c.Id == id) > 0 ? true : false;
+            return false;
+        }
+
+        public bool Delete(int id)
+        {
+            if (Content.Posts.Count(c => c.Id == id) > 0)
+            {
+                Content.Posts.RemoveAt(id);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

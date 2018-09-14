@@ -14,10 +14,35 @@ namespace DVT.APIEcho.Service.Controllers
 
         public Models.Comment Get(int id) => Content.Comments.First(c => c.Id == id);
 
-        public Models.Comment Post([FromBody]Models.Comment value) => value;
+        public Models.Comment Post([FromBody]Models.Comment value)
+        {
+            if (Content.Comments.Count(c => c.Id == value.Id) == 0)
+            {
+                Content.Comments.Add(value);
+            }
+            return value;
+        }
 
-        public bool Put(int id, [FromBody]Models.Comment value) => Content.Comments.Count(c => c.Id == id) > 0 ? true : false;
+        public bool Put(int id, [FromBody]Models.Comment value)
+        {
+            if (Content.Comments.Count(c => c.Id == id) > 0)
+            {
+                Content.Comments[id] = value;
+                return true;
+            }
 
-        public bool Delete(int id) => Content.Comments.Count(c => c.Id == id) > 0 ? true : false;
+            return false;
+        }
+
+        public bool Delete(int id)
+        {
+            if (Content.Comments.Count(c => c.Id == id) > 0)
+            {
+                Content.Comments.RemoveAt(id);
+                return true;
+            }
+
+            return false;
+        }
     }
 }

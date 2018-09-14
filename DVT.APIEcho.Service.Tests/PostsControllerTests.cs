@@ -15,13 +15,10 @@ namespace DVT.APIEcho.Service.Tests
         [Test]
         public void Get_RetrieveAllPosts_PostList()
         {
-            // Arrange
             var unitUnderTest = CreatePostsController();
 
-            // Act
             var result = unitUnderTest.Get();
 
-            // Assert
             Assert.That(result, Is.Not.Null);
             CollectionAssert.IsNotEmpty(result);
             Assert.That(result.First().Id, Is.EqualTo(0));
@@ -33,14 +30,11 @@ namespace DVT.APIEcho.Service.Tests
         [Test]
         public void Get_RequestOnePost_ReturnFirstItemInList()
         {
-            // Arrange
             var unitUnderTest = CreatePostsController();
             int id = 5;
 
-            // Act
             var result = unitUnderTest.Get(id);
 
-            // Assert
             Assert.That(result.Id, Is.EqualTo(5));
             Assert.That(result.Title, Is.EqualTo("foo"));
             Assert.That(result.EMail, Is.EqualTo("foo@email.net"));
@@ -50,7 +44,6 @@ namespace DVT.APIEcho.Service.Tests
         [Test]
         public void Post_NewPost_ReturnAddedPost()
         {
-            // Arrange
             var unitUnderTest = CreatePostsController();
             Models.Post value = new Models.Post()
             {
@@ -60,10 +53,8 @@ namespace DVT.APIEcho.Service.Tests
                 Body = "erwgwegwegsds sfsssw"
             };
 
-            // Act
             var result = unitUnderTest.Post(value);
 
-            // Assert
             Assert.That(result.Id, Is.EqualTo(value.Id));
             Assert.That(result.Title, Is.EqualTo(value.Title));
             Assert.That(result.EMail, Is.EqualTo(value.EMail));
@@ -73,7 +64,6 @@ namespace DVT.APIEcho.Service.Tests
         [Test]
         public void Put_UpdateExistingPost_ReturnTrueMeansSuccess()
         {
-            // Arrange
             var unitUnderTest = CreatePostsController();
             int id = 8;
             Models.Post value = new Models.Post()
@@ -84,24 +74,19 @@ namespace DVT.APIEcho.Service.Tests
                 Body = "drg grg  sw"
             };
 
-            // Act
             var result = unitUnderTest.Put(id, value);
 
-            // Assert
             Assert.That(result, Is.True);
         }
 
         [Test]
         public void Delete_DeletePost_ReturnTrueMeansSuccess()
         {
-            // Arrange
             var unitUnderTest = CreatePostsController();
             int id = 5;
 
-            // Act
             var result = unitUnderTest.Delete(id);
 
-            // Assert
             Assert.That(result, Is.True);
         }
     }
